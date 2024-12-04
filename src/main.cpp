@@ -1,4 +1,5 @@
 #include <iostream>
+#include <math.h>
 #include <vector>
 
 #include "headers/complex.h"
@@ -7,8 +8,8 @@
 using std::min;
 using std::vector;
 
-const int HEIGHT = 400;
-const int WIDTH = 400;
+const int HEIGHT = 600;
+const int WIDTH = 600;
 
 double ZOOM = 100;
 double SHIFT_X = 0.01;
@@ -69,15 +70,19 @@ int main(int argc, char *argv[]) {
 
     SDL_Event event;
     bool running = true;
+    bool zooming = true;
+
     while (running) {
-        SDL_UpdateTexture(texture, nullptr, generate_mandelbrot(50), WIDTH * sizeof(unsigned int));
+        SDL_UpdateTexture(texture, nullptr, generate_mandelbrot(40), WIDTH * sizeof(unsigned int));
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, texture, nullptr, nullptr);
         SDL_RenderPresent(renderer);
 
-        ZOOM += 2;
-        SHIFT_Y += 0.001;
-        SHIFT_Y += 0.001;
+        if (zooming) {
+            ZOOM += 2 + log(ZOOM);
+            SHIFT_Y += 0.001;
+            SHIFT_X += 0.0005;
+        }
 
         if (SDL_PollEvent(&event)) {
             switch (event.type) {
@@ -90,6 +95,41 @@ int main(int argc, char *argv[]) {
                     switch (event.key.keysym.sym) {
                         case SDLK_ESCAPE: {
                             running = false;
+                            break;
+                        }
+
+                        case SDLK_LEFT: {
+                            SHIFT_X += 0.01;
+                            break;
+                        }
+
+                        case SDLK_RIGHT: {
+                            SHIFT_X -= 0.01;
+                            break;
+                        }
+                        
+                        case SDLK_UP: {
+                            SHIFT_Y -= 0.01;
+                            break;
+                        }
+
+                        case SDLK_DOWN: {
+                            SHIFT_Y += 0.01;
+                            break;
+                        }
+
+                        case SDLK_z: {
+                            ZOOM += 20;
+                            break;
+                        }
+
+                        case SDLK_q: {
+                            ZOOM -= 20;
+                            break;
+                        }
+
+                        case SDLK_f: {
+                            zooming = !zooming;
                             break;
                         }
 
