@@ -1,3 +1,4 @@
-# iangaunt/sdl-template
+# iangaunt/mandelbrot
 
-A template for SDL projects.
+A zoomer for the Mandelbrot set. It is slow because the Mandelbrot set is incredibly slow, and I have no real way to get
+around it without using intense estimations or sacrificing visual difference. Sorry!

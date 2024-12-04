@@ -12,8 +12,8 @@
                 "-I${workspaceFolder}/include",
                 "-L${workspaceFolder}/lib",
 
-
-                "${workspaceFolder}/main.cpp",
+                "${workspaceFolder}/src/main.cpp",
+                "${workspaceFolder}/src/complex.cpp",
 
                 "-lmingw32",
                 "-lSDL2main",
