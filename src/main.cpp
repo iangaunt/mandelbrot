@@ -73,15 +73,13 @@ int main(int argc, char *argv[]) {
     bool zooming = true;
 
     while (running) {
-        SDL_UpdateTexture(texture, nullptr, generate_mandelbrot(40), WIDTH * sizeof(unsigned int));
+        SDL_UpdateTexture(texture, nullptr, generate_mandelbrot(50), WIDTH * sizeof(unsigned int));
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, texture, nullptr, nullptr);
         SDL_RenderPresent(renderer);
 
         if (zooming) {
-            ZOOM += 2 + log(ZOOM);
-            SHIFT_Y += 0.001;
-            SHIFT_X += 0.0005;
+            ZOOM += 5 + ZOOM / 25;
         }
 
         if (SDL_PollEvent(&event)) {
@@ -99,12 +97,12 @@ int main(int argc, char *argv[]) {
                         }
 
                         case SDLK_LEFT: {
-                            SHIFT_X += 0.01;
+                            SHIFT_X -= 0.01;
                             break;
                         }
 
                         case SDLK_RIGHT: {
-                            SHIFT_X -= 0.01;
+                            SHIFT_X += 0.01;
                             break;
                         }
                         
